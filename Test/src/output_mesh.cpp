@@ -133,14 +133,26 @@ int32_t output_mesh(int32_t argument_count, char** argument_values)
 
 	input_file_stream.close();
 
-	for (size_t i = 0u; i < vertex_positions.size() - 3; ++i)
+	for (size_t i = 0u; i < vertex_positions.size() - 9; ++i)
 	{
 		indices.push_back(i + 0 + 1);
+		indices.push_back(i + 2 + 1);
+		indices.push_back(i + 1 + 1);
 		indices.push_back(i + 1 + 1);
 		indices.push_back(i + 2 + 1);
-		indices.push_back(i + 0 + 1);
-		indices.push_back(i + 2 + 1);
 		indices.push_back(i + 3 + 1);
+		indices.push_back(i + 1 + 1);
+		indices.push_back(i + 3 + 1);
+		indices.push_back(i + 4 + 1);
+		indices.push_back(i + 5 + 1);
+		indices.push_back(i + 7 + 1);
+		indices.push_back(i + 6 + 1);
+		indices.push_back(i + 6 + 1);
+		indices.push_back(i + 7 + 1);
+		indices.push_back(i + 8 + 1);
+		indices.push_back(i + 6 + 1);
+		indices.push_back(i + 8 + 1);
+		indices.push_back(i + 9 + 1);
 	}
 
 	// Output file:
