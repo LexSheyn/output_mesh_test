@@ -40,57 +40,48 @@ int32_t output_mesh(int32_t argument_count, char** argument_values)
 	std::string input_file_name;
 	std::string output_file_name;
 
-	std::stringstream argument_string_stream;
-
-	std::string token;
+	std::string argument;
 
 	for (int32_t i = 1; i < argument_count; ++i)
 	{
-		argument_string_stream << argument_values[i] << ' ';
-	}
+		argument = argument_values[i];
 
-	argument_string_stream >> token;
-
-	if ((token == token_i) || (token == token_input))
-	{
-		argument_string_stream >> input_file_name;
-
-		if ((input_file_name == token_o) || (input_file_name == token_output))
+		if ((argument == token_i) || (argument == token_input))
 		{
-			std::cerr << LOG_ERROR << "input file name is missing!" << std::endl;
+			input_file_name = argument_values[i + 1];
 
-			return RESULT_ERROR;
+		//	std::cout << LOG_INFO << "input file name is - " << input_file_name << '\n';
 		}
+		else if ((argument == token_o) || (argument == token_output))
+		{
+			output_file_name = argument_values[i + 1];
 
-	//	std::cout << LOG_INFO << "input file name is - " << input_file_name << '\n';
+		//	std::cout << LOG_INFO << "output file name is - " << output_file_name << '\n';
+		}
 	}
-	else
+
+	if (input_file_name.empty())
 	{
 		std::cerr << LOG_ERROR << "input file name is not provided!" << std::endl;
 
 		return RESULT_ERROR;
 	}
-
-	token.clear();
-
-	argument_string_stream >> token;
-
-	if ((token == token_o) || (token == token_output))
+	else if ((input_file_name == token_o) || (input_file_name == token_output))
 	{
-		argument_string_stream >> output_file_name;
+		std::cerr << LOG_ERROR << "input file name is missing!" << std::endl;
 
-		if (output_file_name.empty())
-		{
-			std::cerr << LOG_ERROR << "output file name is missing!" << std::endl;
-
-			return RESULT_ERROR;
-		}
-
-	//	std::cout << LOG_INFO << "output file name is - " << output_file_name << '\n';
+		return RESULT_ERROR;
 	}
-	else
+
+	if (output_file_name.empty())
 	{
 		std::cerr << LOG_ERROR << "output file name is not provided!" << std::endl;
+
+		return RESULT_ERROR;
+	}
+	else if ((output_file_name == token_i) || (output_file_name == token_input))
+	{
+		std::cerr << LOG_ERROR << "output file name is missing!" << std::endl;
 
 		return RESULT_ERROR;
 	}
@@ -144,12 +135,12 @@ int32_t output_mesh(int32_t argument_count, char** argument_values)
 
 	for (size_t i = 0u; i < vertex_positions.size() - 3; ++i)
 	{
-		indices.push_back(i + 0);
-		indices.push_back(i + 1);
-		indices.push_back(i + 2);
-		indices.push_back(i + 0);
-		indices.push_back(i + 2);
-		indices.push_back(i + 3);
+		indices.push_back(i + 0 + 1);
+		indices.push_back(i + 1 + 1);
+		indices.push_back(i + 2 + 1);
+		indices.push_back(i + 0 + 1);
+		indices.push_back(i + 2 + 1);
+		indices.push_back(i + 3 + 1);
 	}
 
 	// Output file:
